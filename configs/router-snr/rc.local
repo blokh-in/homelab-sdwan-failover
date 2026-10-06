@@ -1,0 +1,10 @@
+# /etc/rc.local
+# Пользовательские команды при старте системы OpenWrt (SNR-CPE-AX1)
+
+# Фоновый цикл проверки failover (историческая реализация стенда)
+while true; do
+    /usr/bin/dns_failover.sh
+    sleep 10
+done &
+
+exit 0

@@ -1,0 +1,26 @@
+# WireGuard private keys & secrets
+*.key
+*.priv
+*private*
+*.secret
+.env
+.env.local
+
+# System & editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Temporary / extraction files
+extracted_raw.txt
+*.log
+/scratch/
+/tmp/
+
+# Raw dumps containing unscrubbed private keys & credentials
+*.pdf
+blank.pdf

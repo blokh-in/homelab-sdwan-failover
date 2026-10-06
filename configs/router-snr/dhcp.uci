@@ -1,0 +1,65 @@
+# ==============================================================================
+# /etc/config/dhcp — Конфигурация DHCP и DNS (OpenWrt UCI)
+# ==============================================================================
+
+config dnsmasq
+    option domainneeded '1'
+    option boguspriv '0'
+    option filterwin2k '0'
+    option localise_queries '1'
+    option rebind_protection '0'
+    option rebind_localhost '1'
+    option local '/lan/'
+    option domain 'lan'
+    option expandhosts '1'
+    option nonegcache '0'
+    option authoritative '1'
+    option readethers '0'
+    option leasefile '/tmp/dhcp.leases'
+    option resolvfile '/tmp/resolv.conf.auto'
+    option nonwildcard '1'
+    option localservice '1'
+
+config dhcp 'lan'
+    option interface 'lan'
+    option start '100'
+    option limit '150'
+    option dynamicdhcp '1'
+    option dhcpv4 'server'
+    option ra_slaac '1'
+    list ra_flags 'managed-config'
+    list ra_flags 'other-config'
+    option leasetime '720m'
+    option ignore '0'
+    # Ключевой момент: раздача виртуального IP Orange Pi (AdGuard Home) клиентам сети
+    list dhcp_option '6,192.168.1.9'
+
+config dhcp 'wan'
+    option interface 'wan'
+    option ignore '1'
+
+config odhcpd 'odhcpd'
+    option maindhcp '0'
+    option leasefile '/tmp/hosts/odhcpd'
+    option leasetrigger '/usr/sbin/odhcpdupdate'
+    option loglevel '4'
+
+# Статические аренды (MAC-адреса обезличены)
+config host
+    option mac '00:11:22:33:44:01'
+    option name 'razer'
+    option leasetime '720m'
+    option ip '192.168.1.11'
+    option cwmp_LANDHCPStaticAddress_instance '2'
+
+config host
+    option mac '00:11:22:33:44:02'
+    option name 'server-kz'
+    option leasetime '720m'
+    option ip '192.168.1.10'
+
+config host
+    option mac '00:11:22:33:44:03'
+    option name 'orangepi-gw'
+    option leasetime '720m'
+    option ip '192.168.1.9'
